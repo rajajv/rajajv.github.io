@@ -67,24 +67,6 @@ body {
 
 a { color: var(--link); }
 
-/* --- Loader --- */
-#loader {
-  position: fixed; inset: 0;
-  background: var(--canvas-soft);
-  display: flex; align-items: center; justify-content: center;
-  z-index: 9999;
-  transition: opacity 0.4s ease, visibility 0.4s ease;
-}
-#loader.hidden { opacity: 0; visibility: hidden; }
-.loader-ring {
-  width: 28px; height: 28px;
-  border: 2px solid var(--hairline);
-  border-top-color: var(--ink);
-  border-radius: 50%;
-  animation: spin 0.75s linear infinite;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
-
 /* --- Nav --- */
 #navbar {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
@@ -321,6 +303,31 @@ section { border-bottom: 1px solid var(--hairline); }
 }
 .timeline-list strong { color: var(--ink); font-weight: 500; }
 
+/* --- Projects --- */
+#projects { background: var(--canvas-soft); }
+.project-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.project-card {
+  display: flex; flex-direction: column;
+  background: var(--canvas);
+  border-radius: var(--r-lg); padding: 32px;
+  box-shadow: var(--shadow-float);
+}
+.project-status {
+  align-self: flex-start;
+  font-family: var(--font-mono); font-size: 12px; line-height: 16px;
+  color: var(--body); background: var(--canvas-soft-2);
+  padding: 2px 8px; border-radius: 9999px;
+  margin-bottom: 16px;
+}
+.project-card h3 { font-size: 24px; line-height: 32px; font-weight: 600; letter-spacing: -0.96px; color: var(--ink); margin-bottom: 8px; }
+.project-card p { font-size: 16px; line-height: 24px; color: var(--body); margin-bottom: 24px; }
+.project-tags { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin-top: auto; }
+.project-tags li {
+  font-family: var(--font-mono); font-size: 12px; line-height: 20px;
+  color: var(--ink); background: var(--canvas-soft-2);
+  padding: 0 8px; border-radius: var(--r-sm);
+}
+
 /* --- Cards (skills + achievements) --- */
 .skills-grid, .ach-grid {
   display: grid; grid-template-columns: repeat(3, 1fr);
@@ -338,22 +345,15 @@ section { border-bottom: 1px solid var(--hairline); }
 .skill-icon, .ach-icon { display: none; }
 
 /* --- Skills --- */
-#skills { background: var(--canvas-soft); }
+#skills { background: var(--canvas); }
 .skill-name {
   font-size: 16px; line-height: 24px; font-weight: 600; letter-spacing: -0.32px;
   color: var(--ink); margin-bottom: 8px;
 }
-.skill-desc { font-size: 14px; line-height: 20px; letter-spacing: -0.28px; color: var(--body); margin-bottom: 20px; }
-.skill-bar-track { height: 4px; background: var(--canvas-soft-2); border-radius: 9999px; overflow: hidden; }
-.skill-bar-fill {
-  height: 100%; background: var(--ink); border-radius: 9999px;
-  transform-origin: left; transform: scaleX(0);
-  transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
-}
-.skill-pct { font-family: var(--font-mono); font-size: 12px; line-height: 16px; color: var(--mute); text-align: right; margin-top: 8px; }
+.skill-desc { font-size: 14px; line-height: 20px; letter-spacing: -0.28px; color: var(--body); }
 
 /* --- Achievements --- */
-#achievements { background: var(--canvas); }
+#achievements { background: var(--canvas-soft); }
 .ach-card { display: flex; flex-direction: column; }
 .ach-card .num-label {
   align-self: flex-start;
@@ -384,6 +384,12 @@ section { border-bottom: 1px solid var(--hairline); }
   margin-bottom: 32px;
 }
 #contact .btn-outline { background: var(--on-primary); color: var(--primary); }
+#contact .btn-ghost {
+  background: transparent; color: var(--on-primary);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--on-primary) 30%, transparent);
+}
+#contact .btn-ghost:hover { background: color-mix(in srgb, var(--on-primary) 10%, transparent); }
+.contact-inner .btn + .btn { margin-left: 8px; }
 
 .contact-links {
   display: flex; justify-content: center; flex-wrap: wrap; gap: 12px 24px; margin-top: 48px;
@@ -410,9 +416,6 @@ section { border-bottom: 1px solid var(--hairline); }
   transition: var(--transition);
 }
 .social-strip a:hover { color: var(--ink); }
-
-/* Email strip (right) — covered by nav + contact section */
-.email-strip { display: none; }
 
 /* --- Footer --- */
 footer {
@@ -479,7 +482,8 @@ footer a { color: var(--ink); text-decoration: none; }
   .nav-toggle { display: flex; }
 }
 @media (max-width: 600px) {
-  .skills-grid, .ach-grid { grid-template-columns: 1fr; }
+  .skills-grid, .ach-grid, .project-grid { grid-template-columns: 1fr; }
+  .project-card { padding: 24px; }
   .hero-stats { grid-template-columns: repeat(2, auto); gap: 24px 40px; }
   .section-title { font-size: 28px; line-height: 36px; letter-spacing: -1px; }
 }
